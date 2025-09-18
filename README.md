@@ -92,5 +92,3 @@ Python, Pandas, NumPy, scikit-learn, Matplotlib, Seaborn,Jupyter Notebook, Googl
 * Inspired by modern **AI for agriculture** research and projects.
 
 ---
-
-Do you want me to do that?
