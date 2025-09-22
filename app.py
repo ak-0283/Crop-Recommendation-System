@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
@@ -13,6 +12,11 @@ st.title("🌱 Crop Recommendation System")
 uploaded_file = st.file_uploader("Upload Crop Dataset CSV", type="csv")
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
+    
+    # Show dataset info
+    st.success(f"✅ Dataset Loaded Successfully!")
+    st.write(f"**Number of Rows:** {data.shape[0]}")
+    st.write(f"**Number of Columns:** {data.shape[1]}")
     
     # Split Data
     X = data.drop("label", axis=1)
@@ -46,7 +50,8 @@ if uploaded_file is not None:
         sample = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]],
                               columns=['N','P','K','temperature','humidity','ph','rainfall'])
         prediction = model.predict(sample)
-        st.success(f"✅ Recommended Crop: **{prediction[0]}**")
+        st.markdown("### ✅ Recommended Crop")
+        st.success(f"**{prediction[0]}**")
 
     # Model Evaluation Section
     if st.checkbox("Show Model Evaluation"):
@@ -62,5 +67,6 @@ if uploaded_file is not None:
                     xticklabels=model.classes_,
                     yticklabels=model.classes_, ax=ax)
         st.pyplot(fig)
+
 else:
     st.warning("⚠️ Please upload your Crop Dataset CSV to proceed.")
