@@ -9,14 +9,10 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 st.title("🌱 Crop Recommendation System")
 
 # Upload Dataset
-uploaded_file = st.file_uploader("Upload Crop Dataset CSV", type="csv")
+uploaded_file = st.file_uploader("Upload CSV (Sleep Health Dataset)", type="csv")
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
-    
-    # Show dataset info
-    st.success(f"✅ Dataset Loaded Successfully!")
-    st.write(f"**Number of Rows:** {data.shape[0]}")
-    st.write(f"**Number of Columns:** {data.shape[1]}")
+    st.success(f"✅ Dataset Loaded: {data.shape[0]} rows, {data.shape[1]} columns")
     
     # Split Data
     X = data.drop("label", axis=1)
