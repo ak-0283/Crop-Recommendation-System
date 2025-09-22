@@ -3,14 +3,16 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-# Load Dataset
+# Load Dataset (deployment-safe)
 @st.cache_data
 def load_data():
-    url = "Crop_recommendation.csv"  # Make sure file is in same directory
+    # Path relative to this app.py file
+    url = os.path.join(os.path.dirname(__file__), "Crop_recommendation.csv")
     data = pd.read_csv(url)
     return data
 
@@ -28,12 +30,16 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Train Model
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+@st.cache_resource
+def train_model(X_train, y_train):
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    return model
+
+model = train_model(X_train, y_train)
 
 # Sidebar for User Input
 st.sidebar.header("Enter Soil & Weather Conditions 🌦️")
-
 N = st.sidebar.number_input("Nitrogen (N)", min_value=0, max_value=200, value=50)
 P = st.sidebar.number_input("Phosphorus (P)", min_value=0, max_value=200, value=50)
 K = st.sidebar.number_input("Potassium (K)", min_value=0, max_value=200, value=50)
