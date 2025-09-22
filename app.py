@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 @st.cache_data
 def load_data():
     # Path relative to this app.py file
-    url = os.path.join(os.path.dirname(__file__), "Crop_recommendation.csv")
+    url = os.path.join(os.path.dirname(__file__), "C:\Users\91600\OneDrive\Desktop\c c++\Crop-Recommendation-System\Crop_recommendation.csv")
     data = pd.read_csv(url)
     return data
 
